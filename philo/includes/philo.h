@@ -6,7 +6,7 @@
 /*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:05:00 by fabialme          #+#    #+#             */
-/*   Updated: 2025/11/04 09:37:39 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/11/07 16:03:17 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ bool	check_meals(t_philo *philo);
 bool	check_sim(t_philo *philo);
 void	*monitor_routine(void *data);
 bool	join_simulation(t_table *table);
+t_mtx	*set_first_fork(t_philo *philo);
+t_mtx	*set_second_fork(t_philo *philo);
 
 #endif // !PHILO_H
