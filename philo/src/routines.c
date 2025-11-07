@@ -6,7 +6,7 @@
 /*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 09:21:44 by fabialme          #+#    #+#             */
-/*   Updated: 2025/11/04 10:09:26 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/11/07 16:02:34 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,16 @@ void	one_philo_routine(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
+	t_mtx	*first_fork;
+	t_mtx	*second_fork;
+
 	if (!check_sim(philo))
 		return ;
-	pthread_mutex_lock(philo->l_fork);
+	first_fork = set_first_fork(philo);
+	second_fork = set_second_fork(philo);
+	pthread_mutex_lock(first_fork);
 	print_msg(philo, MSG_FORK);
-	pthread_mutex_lock(philo->r_fork);
+	pthread_mutex_lock(second_fork);
 	print_msg(philo, MSG_FORK);
 	print_msg(philo, MSG_EAT);
 	pthread_mutex_lock(&philo->eat_lock);
@@ -49,8 +54,8 @@ void	philo_eat(t_philo *philo)
 	philo->total_meal_counter++;
 	pthread_mutex_unlock(&philo->eat_lock);
 	ft_usleep(philo->table->time_to_eat);
-	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(first_fork);
+	pthread_mutex_unlock(second_fork);
 	philo_sleep(philo);
 }
 
