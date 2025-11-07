@@ -15,6 +15,7 @@ OBJS_DIR = objs
 
 SRCS := main.c \
 				utils.c \
+				utils2.c \
 				validation.c \
 				clean_utils.c \
 				setup.c \
