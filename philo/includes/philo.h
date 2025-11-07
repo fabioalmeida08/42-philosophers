@@ -87,9 +87,6 @@ bool	start_simulation(t_table *table);
 bool	stop_simulation(t_table *table);
 int		ft_usleep(size_t milliseconds);
 
-void	debug_print_table(t_table *table);
-void	debug_print_philos(t_table *table);
-
 bool	check_meals(t_philo *philo);
 bool	check_sim(t_philo *philo);
 void	*monitor_routine(void *data);
