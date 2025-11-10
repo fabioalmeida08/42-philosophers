@@ -94,7 +94,6 @@ void	*monitor_routine(void *data)
 			pthread_mutex_unlock(&table->sim_lock);
 			break ;
 		}
-		ft_usleep(5);
 	}
 	return (NULL);
 }
