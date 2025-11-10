@@ -37,16 +37,9 @@ void	one_philo_routine(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	t_mtx	*first_fork;
-	t_mtx	*second_fork;
-
-	if (!check_sim(philo))
-		return ;
-	first_fork = set_first_fork(philo);
-	second_fork = set_second_fork(philo);
-	pthread_mutex_lock(first_fork);
+	pthread_mutex_lock(philo->l_fork);
 	print_msg(philo, MSG_FORK);
-	pthread_mutex_lock(second_fork);
+	pthread_mutex_lock(philo->r_fork);
 	print_msg(philo, MSG_FORK);
 	print_msg(philo, MSG_EAT);
 	pthread_mutex_lock(&philo->eat_lock);
@@ -54,8 +47,8 @@ void	philo_eat(t_philo *philo)
 	philo->total_meal_counter++;
 	pthread_mutex_unlock(&philo->eat_lock);
 	ft_usleep(philo->table->time_to_eat);
-	pthread_mutex_unlock(first_fork);
-	pthread_mutex_unlock(second_fork);
+	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(philo->l_fork);
 	philo_sleep(philo);
 }
 
