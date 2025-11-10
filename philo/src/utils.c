@@ -69,8 +69,8 @@ void	print_msg(t_philo *philo, char *msg)
 {
 	long	time;
 
-	pthread_mutex_lock(&philo->table->sim_lock);
 	pthread_mutex_lock(&philo->table->print_lock);
+	pthread_mutex_lock(&philo->table->sim_lock);
 	if (!philo->table->end_simulation)
 	{
 		time = ft_get_time_ms();
