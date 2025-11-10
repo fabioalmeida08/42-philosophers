@@ -65,7 +65,7 @@ void	*philo_routine(void *data)
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)
-		ft_usleep(2);
+		ft_usleep(1);
 	while (check_sim(philo))
 	{
 		philo_eat(philo);
