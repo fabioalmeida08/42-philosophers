@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+#include <pthread.h>
 
 void	philo_think(t_philo *philo)
 {
@@ -37,9 +38,9 @@ void	one_philo_routine(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->l_fork);
-	print_msg(philo, MSG_FORK);
 	pthread_mutex_lock(philo->r_fork);
+	print_msg(philo, MSG_FORK);
+	pthread_mutex_lock(philo->l_fork);
 	print_msg(philo, MSG_FORK);
 	print_msg(philo, MSG_EAT);
 	pthread_mutex_lock(&philo->eat_lock);
@@ -47,9 +48,8 @@ void	philo_eat(t_philo *philo)
 	philo->total_meal_counter++;
 	pthread_mutex_unlock(&philo->eat_lock);
 	ft_usleep(philo->table->time_to_eat);
-	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
-	philo_sleep(philo);
+	pthread_mutex_unlock(philo->r_fork);
 }
 
 void	*philo_routine(void *data)
@@ -71,6 +71,7 @@ void	*philo_routine(void *data)
 	{
 		philo_eat(philo);
 		philo_think(philo);
+		philo_sleep(philo);
 	}
 	return (NULL);
 }
