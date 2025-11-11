@@ -17,6 +17,7 @@ void	philo_think(t_philo *philo)
 	if (!check_sim(philo))
 		return ;
 	print_msg(philo, MSG_THINK);
+	ft_usleep(1);
 }
 
 void	philo_sleep(t_philo *philo)
@@ -37,10 +38,20 @@ void	one_philo_routine(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->l_fork);
-	print_msg(philo, MSG_FORK);
-	pthread_mutex_lock(philo->r_fork);
-	print_msg(philo, MSG_FORK);
+	if (philo->id == philo->table->total_philos)
+	{
+		pthread_mutex_lock(philo->r_fork);
+		print_msg(philo, MSG_FORK);
+		pthread_mutex_lock(philo->l_fork);
+		print_msg(philo, MSG_FORK);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->l_fork);
+		print_msg(philo, MSG_FORK);
+		pthread_mutex_lock(philo->r_fork);
+		print_msg(philo, MSG_FORK);
+	}
 	print_msg(philo, MSG_EAT);
 	pthread_mutex_lock(&philo->eat_lock);
 	philo->last_meal_time = ft_get_time_ms();
@@ -69,8 +80,8 @@ void	*philo_routine(void *data)
 	while (check_sim(philo))
 	{
 		philo_eat(philo);
-		philo_think(philo);
 		philo_sleep(philo);
+		philo_think(philo);
 	}
 	return (NULL);
 }
